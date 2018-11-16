@@ -1,0 +1,866 @@
+
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" ng-app="consoleApp">
+
+
+<head>
+
+
+<meta charset="utf-8">
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+
+<meta id="ss-meta-robots" name="robots" content="noindex" />
+
+
+
+
+
+
+<!-- XDomain for IE 9 -->
+
+
+<!--[if lte IE 9]>
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/xdomain/dist/xdomain.min.js" slave="https://files.seesaw.me/release/pi7_5jf/partials/proxy.add8169d.html"></script>
+
+
+<![endif]-->
+
+
+
+
+
+
+<script>
+
+
+
+
+
+
+var ssBodyLoaded = function() {
+
+
+//if any file import errors are pending, display them
+
+
+ssFileImportErrorObj.errorDivLoadedFn();
+
+
+};
+
+
+
+
+
+
+// This is created to detect when our main CSS or JS files are not loaded.
+
+
+// link tags use onerror attr to run fileImportErrorFn to display the error message.
+
+
+// (The error div displays once the DOM has loaded. See ssBodyLoaded function).
+
+
+var ssFileImportErrorObj = {
+
+
+waitingForLoad: false,
+
+
+fileNamesWithError: '',
+
+
+fileImportErrorFn: function(event, name) {
+
+
+var errorDiv = document.getElementById("ssFileImportError");
+
+
+if (name) {
+
+
+if (ssFileImportErrorObj.fileNamesWithError) {
+
+
+ssFileImportErrorObj.fileNamesWithError += ", " + name;
+
+
+} else {
+
+
+ssFileImportErrorObj.fileNamesWithError = name;
+
+
+}
+
+
+}
+
+
+if (errorDiv) {
+
+
+errorDiv.style.display = "block";
+
+
+var fileNames = document.getElementById("ssFileImportErrorFileNames");
+
+
+if (fileNames) {
+
+
+fileNames.innerText = ssFileImportErrorObj.fileNamesWithError;
+
+
+fileNames.style.display = "block";
+
+
+}
+
+
+ssFileImportErrorObj.waitingForLoad = false;
+
+
+} else {
+
+
+ssFileImportErrorObj.waitingForLoad = true;
+
+
+}
+
+
+},
+
+
+errorDivLoadedFn: function() {
+
+
+if (ssFileImportErrorObj.waitingForLoad === true) {
+
+
+ssFileImportErrorObj.fileImportErrorFn();
+
+
+}
+
+
+}
+
+
+};
+
+
+</script>
+
+
+
+
+
+
+<!-- Chatbot Script -->
+
+
+
+
+
+
+<!-- Favicons -->
+
+
+<link rel="apple-touch-icon" sizes="57x57" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-57x57.png">
+
+
+<link rel="apple-touch-icon" sizes="60x60" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-60x60.png">
+
+
+<link rel="apple-touch-icon" sizes="72x72" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-72x72.png">
+
+
+<link rel="apple-touch-icon" sizes="76x76" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-76x76.png">
+
+
+<link rel="apple-touch-icon" sizes="114x114" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-114x114.png">
+
+
+<link rel="apple-touch-icon" sizes="120x120" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-120x120.png">
+
+
+<link rel="apple-touch-icon" sizes="144x144" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-144x144.png">
+
+
+<link rel="apple-touch-icon" sizes="152x152" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/apple-touch-icon-152x152.png">
+
+
+<link rel="icon" type="image/x-icon" href="https://files.seesaw.me/release/pi7_5jf/images/favicons/favicon.ico">
+
+
+
+
+
+
+<!--Need to limit number of rules per css file, IE9 has a max limit of 4095 selectors per sheet and will ignore anything after-->
+
+
+
+
+
+
+<link onerror="ssFileImportErrorObj.fileImportErrorFn(event, 'bootstrap.css')" href="https://files.seesaw.me/release/pi7_5jf/css/ext_app_1.min.dbd08e0a.css" rel="stylesheet"/>
+
+
+
+
+
+
+<link onerror="ssFileImportErrorObj.fileImportErrorFn(event, 'jquery-ui.css')" href="https://files.seesaw.me/release/pi7_5jf/css/ext_app_2.min.bf258a3f.css" rel="stylesheet"/>
+
+
+
+
+
+
+<link onerror="ssFileImportErrorObj.fileImportErrorFn(event, 'app.min.css')" href="https://files.seesaw.me/release/pi7_5jf/css/sp_app.min.699dc090.css" rel="stylesheet"/>
+
+
+
+
+
+
+
+
+
+
+<title ng-bind="appConfig.windowTitle || 'Seesaw'"></title>
+
+
+</head>
+
+
+<body onload="ssBodyLoaded()">
+
+
+<!--[if lte IE 8]>
+
+
+<h1 style="color:red;padding:3em">We're sorry, Internet Explorer 8 and older are unsupported. Please consider <a href="https://browser-update.org">upgrading your browser</a>.</h1>
+
+
+<![endif]-->
+
+
+
+
+
+
+<noscript>
+
+
+<div style="background-color: #f2dede; padding: 15px; width: 100%; text-align: center;">
+
+
+<span>Seesaw requires JavaScript to work correctly. Please enable JavaScript on your browser. </span>
+
+
+</div>
+
+
+</noscript>
+
+
+
+
+
+
+<div id="ssFileImportError"
+
+
+style="display:none; background-color: #f2dede; padding: 15px; width: 100%; text-align: center;">
+
+
+<span>It looks like your school firewall or web filter is blocking access to Seesaw. <a href="https://help.seesaw.me/hc/en-us/articles/205769045-My-network-is-blocking-Seesaw-How-do-I-fix-this-">Click here</a> for more information about unblocking Seesaw on your network.</span>
+
+
+<span><br/>The following files are experiencing errors: <span id="ssFileImportErrorFileNames"></span> </span>
+
+
+</div>
+
+
+
+
+
+
+<ss-left-nav-panel id="sp-nav"
+
+
+show-header="appConfig.showHeader"
+
+
+app-config="appConfig">
+
+
+</ss-left-nav-panel>
+
+
+
+
+
+
+<div id="sp-page" ng-class="{'sp-white-bg': appConfig.whiteBackground}" ng-controller="PageController">
+
+
+<div class="navbar sp-navbar navbar-default"
+
+
+ng-class="{'ss-role--parent':showFamilyHeader(), 'ss-navbar--single-use':singleUseCheck(), 'col-md-8':appConfig.useShortHeader, 'col-md-12':!appConfig.useShortHeader}"
+
+
+ng-if="appConfig.showHeader"
+
+
+ng-style="showFamilyHeader() && {'background-color': themeColor}">
+
+
+
+
+
+
+<div class="pull-left ss-auth-header-container"
+
+
+ng-click="toggleMenu();"
+
+
+ng-if="appConfig.showUserMenu"
+
+
+ng-cloak>
+
+
+<ss-nav-summary show-notifications="true"
+
+
+show-settings="false">
+
+
+</ss-nav-summary>
+
+
+</div>
+
+
+
+
+
+
+<button type="button"
+
+
+class="sp-back-button pull-left"
+
+
+ng-if="appConfig.showBackButton"
+
+
+ng-click="goBack();"
+
+
+ng-cloak>
+
+
+<span class="glyphicon glyphicon-arrow-left"></span>
+
+
+</button>
+
+
+
+
+
+
+<div ng-show="appConfig.showItemButton"
+
+
+class="pull-right sp-large-item-button"
+
+
+ng-cloak>
+
+
+
+
+
+
+<ss-plus-button ng-if="!isMobile()"
+
+
+class="visible-md-block visible-lg-block ss-plus-button--large"
+
+
+size="x-large"
+
+
+role="{{ currentRole }}"
+
+
+ng-cloak></ss-plus-button>
+
+
+
+
+
+
+<ss-plus-button ng-if="isMobile()"
+
+
+class="visible-xs-block visible-sm-block ss-margin-sm pull-left"
+
+
+size="medium"
+
+
+role="{{ currentRole }}"
+
+
+ng-cloak></ss-plus-button>
+
+
+</div>
+
+
+
+
+
+
+<div ng-if="appConfig.showSignInLink" class="sp-sign-in-link-header" ng-cloak><a ng-click="loginClicked();">Sign In</a></div>
+
+
+
+
+
+
+<ss-icon-button class="visible-xs-block visible-sm-block pull-right ss-margin-sm"
+
+
+size="large"
+
+
+ng-if="appConfig.canShowWrenchIcon"
+
+
+icon-url="{{ IMAGES.wrench_gray }}"
+
+
+icon-hover-url="{{ IMAGES.wrench_fill_gray }}"
+
+
+on-click-fn="showManageClassDialog()"
+
+
+ng-cloak>
+
+
+</ss-icon-button>
+
+
+
+
+
+
+<ss-icon-button class="visible-xs-block visible-sm-block pull-right ss-margin-sm"
+
+
+size="large"
+
+
+ng-if="appConfig.showStudentListButton"
+
+
+icon-url="{{ IMAGES.filter_gray }}"
+
+
+icon-hover-url="{{ IMAGES.filter_fill_gray }}"
+
+
+on-click-fn="openStudentList()"
+
+
+ng-cloak>
+
+
+</ss-icon-button>
+
+
+
+
+
+
+<div ng-if="appConfig.showPageTitle"
+
+
+class="sp-page-title" ng-cloak>
+
+
+<div class="sp-hide-overflow sp-hide-extra-text">
+
+
+<!--todo SARA adjust parent if statement. maybe move to its own-->
+
+
+<ss-family-nav ng-if="showFamilyHeader()">
+
+
+</ss-family-nav>
+
+
+
+
+
+
+<div ng-if="!showFamilyHeader() && appConfig.pageTitle.length < 2"
+
+
+ng-repeat="section in appConfig.pageTitle">
+
+
+<img ng-if="section.image"
+
+
+ng-src="{{ section.image }}"
+
+
+class="sp-page-title-image"
+
+
+ng-click="section.onImageClick();"
+
+
+ng-class="{ 'sp-clickable' : section.onImageClick}"/>
+
+
+
+
+
+
+<div class="ss-page-title--mobile-align">
+
+
+<span ng-show="section.folder"
+
+
+class="fa fa-folder sp-folder-fa"
+
+
+ng-style="{ 'color' : section.folder.color }"></span>
+
+
+<span ng-show="section.text">{{ section.text }}</span>
+
+
+<span ng-show="section.link"><a ng-click="section.callback()">{{ section.linkText }}</a></span>
+
+
+<span class="sp-clickable"
+
+
+ng-show="section.selector"
+
+
+ng-click="section.callback();"><i class="fa fa-2x fa-sort-desc" aria-hidden="true"></i></span>
+
+
+<span ng-show="!$last">&nbsp;&gt;&nbsp;</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div ng-if="!showFamilyHeader() && appConfig.pageTitle.length > 1"
+
+
+class="sp-page-title--long text-left">
+
+
+
+
+
+
+<span ng-repeat="section in appConfig.pageTitle">
+
+
+
+
+
+
+<img ng-if="section.image"
+
+
+ng-src="{{ section.image }}"
+
+
+class="sp-page-title-image--long ss-page-title--mobile-align"
+
+
+ng-click="section.onImageClick();"
+
+
+ng-class="{ 'sp-clickable' : section.onImageClick}"/>
+
+
+
+
+
+
+<span class="ss-page-title--mobile-align">
+
+
+<span ng-show="section.folder"
+
+
+class="fa fa-folder sp-folder-fa"
+
+
+ng-style="{ 'color' : section.folder.color }"></span>
+
+
+<span ng-show="section.text">{{ section.text }}</span>
+
+
+<span ng-show="section.link"><a ng-click="section.callback()">{{ section.linkText }}</a></span>
+
+
+<span class="sp-clickable"
+
+
+ng-show="section.selector"
+
+
+ng-click="section.callback();"><i class="fa fa-2x fa-sort-desc" aria-hidden="true"></i></span>
+
+
+<span ng-show="!$last">&nbsp;&gt;&nbsp;</span>
+
+
+</span>
+
+
+
+
+
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="ss-page-content"
+
+
+id="ss-app-page-content"
+
+
+ng-class="{'sp-fullpage-content': !appConfig.showHeader}">
+
+
+<div ng-if="appConfig.shadowPageContent"
+
+
+ng-click="toggleMenu()"
+
+
+ng-class="{in: animate}"
+
+
+ng-style="{'z-index': 1040 + (index &amp;&amp; 1 || 0) + index*10}" uib-modal-backdrop="" style="z-index: 1040;"></div>
+
+
+<div class="container-fluid"
+
+
+ng-if="appConfig.siteError ||
+
+
+appConfig.successMessage ||
+
+
+(appConfig.googleSignout || appConfig.cleverSignout || appConfig.googleDriveSignout)">
+
+
+<div ng-class="{'col-md-8': appConfig.useShortHeader, 'col-md-push-1 col-md-10': !appConfig.useShortHeader}">
+
+
+<div ng-if="appConfig.siteError"
+
+
+ng-cloak
+
+
+class="alert alert-danger text-center" role="alert">{{ appConfig.siteError }}
+
+
+<a ng-if="appConfig.siteErrorAction"
+
+
+ng-click="appConfig.siteErrorAction.onClickFn()">
+
+
+{{ appConfig.siteErrorAction.message }}
+
+
+</a>
+
+
+</div>
+
+
+<div ng-show="appConfig.googleSignout || appConfig.cleverSignout || appConfig.googleDriveSignout"
+
+
+ng-cloak
+
+
+class="alert alert-danger text-center" role="alert">
+
+
+<span ng-show="appConfig.googleSignout || appConfig.googleDriveSignout">You have been signed out of Seesaw, but not Google. <a href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue={{ baseUrl }}">Click here to sign out of Google</a>.</span>
+
+
+<span ng-show="appConfig.cleverSignout">You have been signed out of Seesaw, but not Clever. <a href="https://clever.com/login" target="_blank" ng-click="removeCleverParam();">Click here to sign out of Clever</a>.</span>
+
+
+</div>
+
+
+
+
+
+
+<div ng-if="appConfig.successMessage" ng-cloak class="alert alert-success text-center" role="alert"><span ng-bind-html="appConfig.successMessage"></span></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="ss-top-padding-md" ng-if="routeChangeInProgress">
+
+
+<sp-loading-spinner></sp-loading-spinner>
+
+
+</div>
+
+
+
+
+
+
+<div class="sp-view-wrapper" ng-view></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/jquery-1.11.1.min.js"></script>
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/angular.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/html5-qrcode--modified/lib/jsqrcode-combined.min.js"></script>
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/html5-qrcode--modified/lib/html5-qrcode.min.js"></script>
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/fabric/fabric.min.js"></script>
+
+
+<!-- For minified pdfjs, build from source and run gulp minified -->
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/pdfjs/pdf.min.js"></script>
+
+
+<script src="https://files.seesaw.me/release/pi7_5jf/ext/pdfjs/pdf.worker.min.js"></script>
+
+
+
+
+
+
+<script onerror="ssFileImportErrorObj.fileImportErrorFn(event, 'app.min.js')" src="https://files.seesaw.me/release/pi7_5jf/js/app.min.af74e731.js"></script>
+
+
+</body>
+
+
+</html>
+
+
+
+
+
